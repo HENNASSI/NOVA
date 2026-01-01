@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Outlook Check-in Formatter</title>
+<style>
+body {
+    font-family: "Aptos Serif", serif;
+    background: #f5f6f7;
+    padding: 20px;
+}
+
+textarea {
+    width: 100%;
+    height: 220px;
+    font-size: 14px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+table {
+    margin-top: 20px;
+    border-collapse: collapse;
+    font-size: 12pt;
+}
+
+td {
+    padding: 2px 0;
+    vertical-align: top;
+}
+
+.col-name {
+    width: 420px; /* 👈 هادي هي السر ديال المسافة */
+}
+
+.col-code {
+    width: 120px;
+}
+</style>
+</head>
+<body>
+
+<h3>Outlook Check-in Generator</h3>
+
+<textarea id="input" placeholder="لسّق اللائحة هنا..."></textarea>
+<br>
+<button onclick="generate()">Generate</button>
+
+<div id="output"></div>
+
+<script>
+function generate() {
+    const text = document.getElementById("input").value.trim();
+    const lines = text.split("\n").map(l => l.trim()).filter(l => l);
+
+    let html = "<table>";
+    let i = 1;
+
+    for (let x = 0; x < lines.length; x += 2) {
+        let name = lines[x];
+        let code = lines[x + 1] || "";
+
+        html += `
+        <tr>
+            <td class="col-name">${i}. ${name}</td>
+            <td class="col-code">${code}</td>
+        </tr>`;
+        i++;
+    }
+
+    html += "</table>";
+    document.getElementById("output").innerHTML = html;
+}
+</script>
+
+</body>
+</html>
